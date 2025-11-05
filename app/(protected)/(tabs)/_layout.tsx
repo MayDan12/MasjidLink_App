@@ -7,7 +7,12 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Redirect, Tabs, useRouter } from "expo-router";
-import { CalendarDaysIcon, Heart, Home, LogOut } from "lucide-react-native";
+import {
+  CalendarDaysIcon,
+  Home,
+  LineSquiggle,
+  LogOut,
+} from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
 export default function TabLayout() {
@@ -136,11 +141,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="donation"
+        name="tasbih"
         options={{
-          title: "Donations",
+          title: "Tasbih",
           headerStyle: {},
-          tabBarIcon: ({ color }) => <Heart size={24} color={color} />,
+          tabBarIcon: ({ color }) => <LineSquiggle size={24} color={color} />,
         }}
       />
     </Tabs>

@@ -134,31 +134,31 @@ const styles = StyleSheet.create({
   prayerName: {
     fontSize: 15,
     color: COLORS.sand,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   currentPrayerName: {
-    fontFamily: "Inter_700Bold",
+    fontFamily: "CrimsonText_700Bold",
     color: COLORS.emerald,
   },
   nonPrayerName: {
     color: "#9E9E9E",
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   subtitle: {
     fontSize: 12,
     color: "#B0B0B0",
     marginTop: 2,
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   time: {
     fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
     color: COLORS.sand,
   },
   currentTime: {
     color: COLORS.emerald,
     fontSize: 15,
-    fontFamily: "Inter_700Bold",
+    fontFamily: "CrimsonText_700Bold",
   },
   rightSection: {
     marginLeft: 12,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   nowBadgeText: {
     color: COLORS.sand,
     fontSize: 12,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
 });
 

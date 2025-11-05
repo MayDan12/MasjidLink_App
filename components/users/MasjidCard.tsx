@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#0D1B2A",
     marginRight: 8,
-    fontFamily: "Inter_700Bold",
+    fontFamily: "CrimsonText_700Bold",
   },
   rating: {
     flexDirection: "row",
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontSize: 14,
     color: "#0D1B2A",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   statsRow: {
     flexDirection: "row",
@@ -213,13 +213,13 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 18,
     color: "#0D1B2A",
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   statTextSub: {
     marginLeft: 4,
     fontSize: 14,
     color: "#2E7D32",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   prayerInfo: {
     backgroundColor: "#EFF6FF",
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#3B82F6",
     fontWeight: "500",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   prayerDetails: {
     flexDirection: "row",
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   prayerName: {
     fontSize: 16,
     color: "#1E40AF",
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   prayerTime: {
     fontSize: 14,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   facilityText: {
     fontSize: 13,
     color: "#4B5563",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   actions: {
     flexDirection: "row",
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "600",
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   secondaryButton: {
     backgroundColor: "#EFF6FF",

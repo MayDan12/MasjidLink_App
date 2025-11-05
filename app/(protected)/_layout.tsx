@@ -100,6 +100,19 @@ export default function ProtectedLayout() {
         }}
       />
       <Stack.Screen
+        name="user/qibla"
+        options={{
+          headerTitle: () => <HeaderTitle title="Qibla" />,
+          headerStyle: {
+            backgroundColor: "#2E7D32",
+          },
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
+          animation: "slide_from_left", // Slide in from the right
+          animationDuration: 300, // Duration in milliseconds
+        }}
+      />
+      <Stack.Screen
         name="user/account/profileupdate"
         options={{
           headerTitle: () => <HeaderTitle title="Profile" />,
@@ -116,8 +129,36 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/account/settings"
         options={{
-          headerTitle: () => <HeaderTitle title="Profile" />,
-          headerShown: false,
+          headerTitle: () => <HeaderTitle title="Settings" />,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#2E7D32",
+          },
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
+          animation: "slide_from_bottom", // Slide in from the bottom
+          animationDuration: 300, // Duration in milliseconds
+        }}
+      />
+      <Stack.Screen
+        name="user/premium"
+        options={{
+          headerTitle: () => <HeaderTitle title="Premium" />,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#2E7D32",
+          },
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
+          animation: "slide_from_bottom", // Slide in from the bottom
+          animationDuration: 300, // Duration in milliseconds
+        }}
+      />
+      <Stack.Screen
+        name="user/donation"
+        options={{
+          headerTitle: () => <HeaderTitle title="Donations" />,
+          headerShown: true,
           headerStyle: {
             backgroundColor: "#2E7D32",
           },

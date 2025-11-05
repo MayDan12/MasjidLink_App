@@ -1,5 +1,4 @@
-import { AuthProvider, useAuth } from "@/app/context/AuthContext";
-import Loader from "@/components/Loader";
+import { AuthProvider } from "@/app/context/AuthContext";
 import { Ephesis_400Regular } from "@expo-google-fonts/ephesis";
 import {
   Inter_400Regular,
@@ -46,11 +45,6 @@ export default function RootLayout() {
 }
 
 function AuthGate() {
-  const { loading, roleLoading } = useAuth();
-
-  if (loading && roleLoading) {
-    return <Loader loading={true} />;
-  }
   return (
     <Slot
       screenOptions={{

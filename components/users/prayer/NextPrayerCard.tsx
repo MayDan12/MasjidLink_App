@@ -144,14 +144,14 @@ const styles = StyleSheet.create({
   },
   nextPrayerText: {
     color: "#64748b",
-    fontSize: 14,
-    fontFamily: "Inter_400Regular",
+    fontSize: 15,
+    fontFamily: "CrimsonText_400Regular",
   },
   nowText: {
     color: "#64748b",
     fontSize: 13,
     marginBottom: 4,
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   currentPrayerRow: {
     flexDirection: "row",
@@ -182,19 +182,19 @@ const styles = StyleSheet.create({
   },
   prayerName: {
     color: "#f1f5f9",
-    fontSize: 16,
-    fontFamily: "Inter_700Bold",
+    fontSize: 18,
+    fontFamily: "CrimsonText_700Bold",
     marginBottom: 2,
   },
   tomorrowText: {
     color: "#93c5fd",
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "500",
   },
   prayerTime: {
     color: "#ffffff",
-    fontSize: 28,
-    fontFamily: "Inter_700Bold",
+    fontSize: 29,
+    fontFamily: "CrimsonText_700Bold",
     marginBottom: 5,
   },
   countdown: {

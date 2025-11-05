@@ -7,13 +7,30 @@ export default {
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/masjidlink.png",
+    userInterfaceStyle: "light",
+
     splash: {
       image: "./assets/images/masjidlink.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
+    ios: {
+      bundleIdentifier: "com.masjidlink.develop", // Add this line
+      supportsTablet: true,
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+        NSLocationWhenInUseUsageDescription:
+          "This app needs location access to find Qibla direction.",
+        NSMotionUsageDescription:
+          "This app needs motion access for compass functionality.",
+        NSPhotoLibraryUsageDescription: "We need access to save photos",
+        NSCameraUsageDescription: "We need access to take pictures",
+        NSMicrophoneUsageDescription: "We need access to record audio",
+      },
+    },
     android: {
       package: "com.masjidlink.app",
+      permissions: ["ACCESS_FINE_LOCATION"],
     },
     extra: {
       EXPO_PUBLIC_FIREBASE_API_KEY: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,

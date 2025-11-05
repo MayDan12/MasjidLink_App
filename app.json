@@ -12,7 +12,15 @@
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "jsEngine": "hermes",
-      "bundleIdentifier": "com.mayowadan.masjidlink"
+      "bundleIdentifier": "com.masjidlink.develop",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "This app needs location access to find Qibla direction.",
+        "NSMotionUsageDescription": "This app needs motion access for compass functionality.",
+        "NSPhotoLibraryUsageDescription": "We need access to save photos",
+        "NSCameraUsageDescription": "We need access to take pictures",
+        "NSMicrophoneUsageDescription": "We need access to record audio"
+      }
     },
     "android": {
       "versionCode": 1,
@@ -23,6 +31,7 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/masjidlink.png"
       },
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.mayowadan.masjidlink"
@@ -52,6 +61,14 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends.",
           "cameraPermission": "The app accesses your camera to let you take profile pictures."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "13.0"
+          }
         }
       ]
     ],

@@ -59,6 +59,7 @@ export default function PrayerTimesScreen() {
     loading,
     error,
     refreshing,
+    info,
     onRefresh,
     getCurrentPrayer,
     getNextPrayer,
@@ -127,7 +128,7 @@ export default function PrayerTimesScreen() {
           <View style={styles.locationRow}>
             <View style={styles.locationContainer}>
               <MapPin size={16} color="#10b981" />
-              <Text style={styles.locationText}>Lagos</Text>
+              <Text style={styles.locationText}>{info?.city}</Text>
             </View>
             <Text style={styles.organizationText}>
               Muslim World League (MWL)
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
     color: "#0D1B2A",
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   hijriDate: {
     color: "#64748b",
@@ -286,7 +287,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
     color: "#0D1B2A",
     marginBottom: 5,
     textAlign: "center",
@@ -319,7 +320,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
 
     marginBottom: 20,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   adBanner: {
     borderRadius: 16,

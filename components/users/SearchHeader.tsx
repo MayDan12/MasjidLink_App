@@ -1,4 +1,3 @@
-import { FilterOption } from "@/types/masjid";
 import { Search, X } from "lucide-react-native";
 import React from "react";
 import {
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
     color: "#0D1B2A",
-    fontFamily: "Inter_700Bold",
+    fontFamily: "CrimsonText_700Bold",
   },
   searchContainer: {
     flexDirection: "row",
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
   resultsCount: {
     fontSize: 14,
     color: "#6B7280",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   filtersContainer: {
     flexDirection: "row",

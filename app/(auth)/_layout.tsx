@@ -1,8 +1,14 @@
+import Loader from "@/components/Loader";
 import { Redirect, Stack } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 
 export default function AuthLayout() {
-  const { user, loading } = useAuth();
+  // const { user, loading } = useAuth();
+  const { user, loading, roleLoading } = useAuth();
+
+  if (loading && roleLoading) {
+    return <Loader loading={true} />;
+  }
 
   //   if (loading) {
   //     return (

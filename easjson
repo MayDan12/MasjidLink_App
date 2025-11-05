@@ -5,14 +5,14 @@
   },
   "build": {
     "development": {
-      "developmentClient": true,
-      "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
     },
     "preview": {
-      "distribution": "internal"
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {
       "autoIncrement": true,
@@ -22,12 +22,6 @@
     }
   },
   "submit": {
-    "production": {
-      "ios": {
-        "appleId": "muslimpathsupp@gmail.com",
-        "ascAppId": "6754717998",
-        "appleTeamId": "LD33BPBL7K"
-      }
-    }
+    "production": {}
   }
 }

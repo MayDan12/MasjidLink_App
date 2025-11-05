@@ -446,6 +446,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Profile = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(async () => {
@@ -460,7 +461,7 @@ const Profile = () => {
 
   const handleSettings = () => {
     // Navigate to settings or show settings modal
-    Alert.alert("Settings", "Settings functionality would go here");
+    router.push("/user/account/settings");
   };
 
   const getMemberSinceDate = () => {

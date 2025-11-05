@@ -254,13 +254,13 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: COLORS.midnight,
     fontSize: 22,
-    fontFamily: "Inter_700Bold",
+    fontFamily: "CrimsonText_700Bold",
   },
   headerSubtitle: {
     color: COLORS.midnight,
     fontSize: 14,
     marginTop: 2,
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   searchFilterContainer: {
     flexDirection: "row",
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: COLORS.midnight,
     fontSize: 14,
-    fontFamily: "Inter_400Regular",
+    fontFamily: "CrimsonText_400Regular",
   },
   filterButton: {
     width: 44,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   filterChipText: {
     color: COLORS.midnight,
     fontSize: 14,
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   filterChipTextActive: {
     color: COLORS.sand,
@@ -329,11 +329,11 @@ const styles = StyleSheet.create({
   eventTitle: {
     color: COLORS.midnight,
     fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   eventType: {
     fontSize: 14,
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
   },
   eventFooter: {
     flexDirection: "row",
@@ -347,12 +347,12 @@ const styles = StyleSheet.create({
   attendeesText: {
     color: COLORS.midnight,
     fontSize: 13,
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
     marginLeft: 8,
   },
   seeAllText: {
     color: "#ffffff",
     fontSize: 14,
-    fontFamily: "Inter_500Medium",
+    fontFamily: "CrimsonText_600SemiBold",
   },
 });
