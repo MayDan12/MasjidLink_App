@@ -1,3 +1,4 @@
+import { useAuth } from "@/app/context/AuthContext";
 import { Campaign } from "@/types/donation";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -22,6 +23,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
   onPress,
   onDonate,
 }) => {
+  const { role } = useAuth();
   const progress = (campaign.amountRaised / campaign.goal_amount) * 100;
   const daysRemaining = Math.ceil(
     (new Date(campaign.endDate).getTime() - new Date().getTime()) /
@@ -257,33 +259,125 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
         </View>
 
         {/* Donate Button */}
-        <TouchableOpacity
-          onPress={() => onDonate(campaign)}
-          disabled={campaign.status !== "active"}
-          style={{
-            backgroundColor:
-              campaign.status === "active" ? "#0A9C94" : "#E0E0E0",
-            paddingVertical: 12,
-            borderRadius: 8,
-            alignItems: "center",
-          }}
-        >
-          <Text
+        {role === "user" ? (
+          <TouchableOpacity
+            onPress={() => onDonate(campaign)}
+            disabled={campaign.status !== "active"}
             style={{
-              color: campaign.status === "active" ? "#fff" : "#9E9E9E",
-              fontSize: 16,
-              fontWeight: "600",
+              backgroundColor:
+                campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
+              paddingVertical: 12,
+              borderRadius: 8,
+              alignItems: "center",
             }}
           >
-            {campaign.status === "active"
-              ? "Donate Now"
-              : campaign.status === "completed"
-                ? "View Details"
-                : campaign.status === "upcoming"
-                  ? "Notify Me"
-                  : "Archived"}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: campaign.status === "active" ? "#fff" : "#9E9E9E",
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              {campaign.status === "active"
+                ? "Donate Now"
+                : campaign.status === "completed"
+                  ? "View Details"
+                  : campaign.status === "upcoming"
+                    ? "Notify Me"
+                    : "Archived"}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            {/* <TouchableOpacity
+              onPress={() => onDonate(campaign)}
+              disabled={campaign.status !== "active"}
+              style={{
+                backgroundColor:
+                  campaign.status === "active" ? "#0A9C94" : "#E0E0E0",
+                paddingVertical: 12,
+                borderRadius: 8,
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: campaign.status === "active" ? "#fff" : "#9E9E9E",
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                {campaign.status === "active"
+                  ? "Chill first"
+                  : campaign.status === "completed"
+                    ? "View Details"
+                    : campaign.status === "upcoming"
+                      ? "Notify Me"
+                      : "Archived"}
+              </Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              onPress={() => onDonate(campaign)}
+              disabled={campaign.status !== "active"}
+              style={{
+                backgroundColor:
+                  campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
+                paddingVertical: 12,
+                borderRadius: 8,
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: campaign.status === "active" ? "#fff" : "#9E9E9E",
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                {campaign.status === "active"
+                  ? "Chill first"
+                  : campaign.status === "completed"
+                    ? "View Details"
+                    : campaign.status === "upcoming"
+                      ? "Notify Me"
+                      : "Archived"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => onDonate(campaign)}
+              disabled={campaign.status !== "active"}
+              style={{
+                backgroundColor:
+                  campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
+                paddingVertical: 12,
+                borderRadius: 8,
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: campaign.status === "active" ? "#fff" : "#9E9E9E",
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                {campaign.status === "active"
+                  ? "Chill first"
+                  : campaign.status === "completed"
+                    ? "View Details"
+                    : campaign.status === "upcoming"
+                      ? "Notify Me"
+                      : "Archived"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
