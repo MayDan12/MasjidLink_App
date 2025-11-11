@@ -17,11 +17,11 @@ import {
   ChevronRight,
   Clock,
   Compass,
+  HandCoins,
   Heart,
   MapPin,
   Music,
   Star,
-  Stars,
   UserCog,
 } from "lucide-react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -74,9 +74,9 @@ const { width } = Dimensions.get("window");
 const QUICK_ACTIONS = [
   {
     id: 1,
-    icon: <Stars size={24} color="#D4AF37" />,
-    title: "Go Premium",
-    route: "/user/premium",
+    icon: <HandCoins size={28} color="#D4AF37" />,
+    title: "Donation",
+    route: "/user/donation",
     bgColor: "rgba(212, 175, 55, 0.1)",
   },
   {

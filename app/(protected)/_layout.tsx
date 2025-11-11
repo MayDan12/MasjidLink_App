@@ -168,6 +168,20 @@ export default function ProtectedLayout() {
           animationDuration: 300, // Duration in milliseconds
         }}
       />
+      <Stack.Screen
+        name="user/imam/donation"
+        options={{
+          headerTitle: () => <HeaderTitle title="Donations" />,
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: "#2E7D32",
+          },
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
+          animation: "slide_from_bottom", // Slide in from the bottom
+          animationDuration: 300, // Duration in milliseconds
+        }}
+      />
     </Stack>
   );
 }
