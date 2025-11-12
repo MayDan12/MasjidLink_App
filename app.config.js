@@ -112,7 +112,13 @@ export default {
 
     plugins: [
       "expo-router",
-      "@stripe/stripe-react-native",
+      [
+        "@stripe/stripe-react-native",
+        {
+          merchantIdentifier: "merchant.com.yourcompany.appname",
+          enableGooglePay: false,
+        },
+      ],
       [
         "expo-splash-screen",
         {
