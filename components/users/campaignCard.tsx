@@ -15,6 +15,7 @@ import {
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { toast } from "sonner-native";
+import { DonationModal } from "./donationmodal";
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -28,6 +29,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
   onDonate,
 }) => {
   const { role } = useAuth();
+  const [donationModalVisible, setDonationModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const progress = (campaign.amountRaised / campaign.goal_amount) * 100;
   const daysRemaining = Math.ceil(
@@ -82,6 +84,14 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
         return "Archived Campaign";
       default:
         return "";
+    }
+  };
+
+  const handleDonatePress = () => {
+    if (campaign.status === "active") {
+      setDonationModalVisible(true);
+    } else {
+      onPress(campaign);
     }
   };
 
@@ -283,7 +293,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
         {/* Donate Button */}
         {role === "user" ? (
           <TouchableOpacity
-            onPress={() => onDonate(campaign)}
+            onPress={() => handleDonatePress()}
             disabled={campaign.status !== "active"}
             style={{
               backgroundColor:
@@ -401,6 +411,12 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
           </View>
         )}
       </View>
+
+      <DonationModal
+        visible={donationModalVisible}
+        onClose={() => setDonationModalVisible(false)}
+        campaign={campaign}
+      />
     </TouchableOpacity>
   );
 };

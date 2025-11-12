@@ -23,17 +23,20 @@ export const useCampaignDonation = () => {
     try {
       const token = await user.getIdToken();
 
-      const response = await fetch("/api/donations/campaign/intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          campaignId,
-          amount,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/donations/campaign/intent`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            campaignId,
+            amount,
+          }),
+        }
+      );
 
       const result = await response.json();
 
@@ -60,16 +63,19 @@ export const useCampaignDonation = () => {
     try {
       const token = await user.getIdToken();
 
-      const response = await fetch("/api/donations/campaign/confirm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          paymentIntentId,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/donations/campaign/confirm`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            paymentIntentId,
+          }),
+        }
+      );
 
       const result = await response.json();
 
