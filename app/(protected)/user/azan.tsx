@@ -1,8 +1,14 @@
 import ShimmerSkeleton from "@/components/ShimmerSkeleton";
-import { subscribeToEvents } from "@/services/getEvent";
-import { Event } from "@/types/event";
-import { Filter, Play, Search, ShoppingCart, User } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+import {
+  Filter,
+  Pause,
+  Play,
+  Search,
+  ShoppingCart,
+  User,
+} from "lucide-react-native";
+import { useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -42,71 +48,146 @@ const azanVoices: AzanData[] = [
   {
     id: "2",
     name: "Muezzin 2",
-    type: "premium",
+    type: "free",
     azan: "azan2.mp3",
     location: "Medina",
-    price: 5,
+    price: 0,
   },
   {
     id: "3",
     name: "Muezzin 3",
-    type: "mecca",
+    type: "free",
     azan: "azan3.mp3",
     location: "Mecca",
-    price: 10,
+    price: 0,
   },
   {
     id: "4",
     name: "Muezzin 4",
-    type: "medina",
+    type: "free",
     azan: "azan4.mp3",
     location: "Medina",
-    price: 15,
+    price: 0,
   },
   {
     id: "5",
     name: "Muezzin 5",
-    type: "other",
+    type: "free",
     azan: "azan5.mp3",
     location: "Other",
-    price: 20,
+    price: 0,
+  },
+  {
+    id: "6",
+    name: "Muezzin 6",
+    type: "free",
+    azan: "azan6.mp3",
+    location: "Other",
+    price: 0,
+  },
+  {
+    id: "7",
+    name: "Muezzin 7",
+    type: "free",
+    azan: "azan7.mp3",
+    location: "Other",
+    price: 0,
+  },
+  {
+    id: "8",
+    name: "Muezzin 8",
+    type: "free",
+    azan: "azan8.mp3",
+    location: "Other",
+    price: 0,
   },
 ];
 
+// Map audio files for static require
+const azanAudioMap: Record<string, any> = {
+  "azan1.mp3": require("@/assets/audio/azan1.mp3"),
+  "azan2.mp3": require("@/assets/audio/azan2.mp3"),
+  "azan3.mp3": require("@/assets/audio/azan3.mp3"),
+  "azan4.mp3": require("@/assets/audio/azan4.mp3"),
+  "azan5.mp3": require("@/assets/audio/azan5.mp3"),
+  "azan6.mp3": require("@/assets/audio/azan6.mp3"),
+  "azan7.mp3": require("@/assets/audio/azan7.mp3"),
+  "azan8.mp3": require("@/assets/audio/azan8.mp3"),
+};
+
 export default function AzanScreen() {
   const [selectedFilter, setSelectedFilter] = useState("All");
-  const [events, setEvents] = useState<Event[]>([]);
-  const [azans, setAzans] = useState<AzanData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentAzanId, setCurrentAzanId] = useState<string | null>(null);
 
-  useEffect(() => {
-    setLoading(true);
-    // Subscribe to realtime events
-    const unsubscribe = subscribeToEvents((newEvents) => {
-      setEvents(newEvents);
-      setLoading(false);
-    });
+  // Create individual audio players for each azan
+  const azanPlayers = {
+    "1": useAudioPlayer(azanAudioMap["azan1.mp3"]),
+    "2": useAudioPlayer(azanAudioMap["azan2.mp3"]),
+    "3": useAudioPlayer(azanAudioMap["azan3.mp3"]),
+    "4": useAudioPlayer(azanAudioMap["azan4.mp3"]),
+    "5": useAudioPlayer(azanAudioMap["azan5.mp3"]),
+    "6": useAudioPlayer(azanAudioMap["azan6.mp3"]),
+    "7": useAudioPlayer(azanAudioMap["azan7.mp3"]),
+    "8": useAudioPlayer(azanAudioMap["azan8.mp3"]),
+  };
 
-    // Cleanup on unmount
-    return () => unsubscribe();
-  }, []);
-
-  // "janazah" | "lecture" | "iftar" | "class" | "other";
+  // Get status for each player
+  const azanStatuses = {
+    "1": useAudioPlayerStatus(azanPlayers["1"]),
+    "2": useAudioPlayerStatus(azanPlayers["2"]),
+    "3": useAudioPlayerStatus(azanPlayers["3"]),
+    "4": useAudioPlayerStatus(azanPlayers["4"]),
+    "5": useAudioPlayerStatus(azanPlayers["5"]),
+    "6": useAudioPlayerStatus(azanPlayers["6"]),
+    "7": useAudioPlayerStatus(azanPlayers["7"]),
+    "8": useAudioPlayerStatus(azanPlayers["8"]),
+  };
 
   const filteredAzans =
     selectedFilter === "All"
       ? azanVoices
       : azanVoices.filter((e) => e.type === selectedFilter);
 
-  return (
-    <View style={{ flex: 1, backgroundColor: "#F5F5DC" }}>
-      {/* <StatusBar style="light" /> */}
-      {/* Background */}
+  const handlePlayAzan = async (azanId: string) => {
+    try {
+      const player = azanPlayers[azanId as keyof typeof azanPlayers];
+      const status = azanStatuses[azanId as keyof typeof azanStatuses];
 
+      if (currentAzanId === azanId) {
+        // If clicking the same azan, toggle play/pause
+        if (status?.playing) {
+          await player.pause();
+          setCurrentAzanId(null);
+        } else {
+          await player.play();
+          setCurrentAzanId(azanId);
+        }
+      } else {
+        // If clicking a different azan, stop current and play new one
+        if (currentAzanId) {
+          await azanPlayers[currentAzanId as keyof typeof azanPlayers].pause();
+        }
+
+        await player.play();
+        setCurrentAzanId(azanId);
+      }
+    } catch (error) {
+      console.error("Error playing audio:", error);
+    }
+  };
+
+  // Check if any azan is currently playing
+  const isAzanPlaying = (azanId: string) => {
+    const status = azanStatuses[azanId as keyof typeof azanStatuses];
+    return currentAzanId === azanId && status?.playing;
+  };
+
+  return (
+    <View style={{ flex: 1, backgroundColor: COLORS.sand }}>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          {/* <Text style={styles.headerTitle}></Text> */}
           <Text style={styles.headerSubtitle}>
             Add your favorite Azan voices to prayer time
           </Text>
@@ -143,7 +224,6 @@ export default function AzanScreen() {
                   styles.filterChipText,
                   selectedFilter === item && styles.filterChipTextActive,
                 ]}
-                className="capitalize w-full text-center"
               >
                 {item}
               </Text>
@@ -151,20 +231,19 @@ export default function AzanScreen() {
           )}
         />
 
+        {/* Azan list */}
         <FlatList
-          data={loading ? [] : filteredAzans} // empty while loading
+          data={loading ? [] : filteredAzans}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 150 }}
           ListEmptyComponent={
             loading ? (
-              // Skeleton loaders while fetching
               <View style={{ gap: 12 }}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                {[...Array(9)].map((_, i) => (
                   <ShimmerSkeleton key={i} height={70} variant="circle" />
                 ))}
               </View>
             ) : (
-              // Message when no events found
               <Text
                 style={{
                   textAlign: "center",
@@ -177,42 +256,40 @@ export default function AzanScreen() {
             )
           }
           renderItem={({ item: azan }) => (
-            <View
-              style={styles.azanCard}
-              className=" border-emerald/25 px-5 py-2 flex-row items-center"
-            >
-              {/* azan Icon */}
-              <TouchableOpacity className="items-center justify-center bg-emerald/25 p-3 rounded-2xl">
-                {/* {getEventTypeIcon(azan.type)} */}
+            <View style={styles.azanCard}>
+              <TouchableOpacity style={styles.iconContainer}>
                 <User size={24} color={COLORS.emerald} />
               </TouchableOpacity>
 
-              {/* azan Info */}
-              <View className="flex-1 ml-4">
+              <View style={{ flex: 1, marginLeft: 16 }}>
                 <View style={styles.azanHeader}>
                   <View>
-                    <Text style={[styles.azanType]} className="capitalize">
+                    <Text style={styles.azanType}>
                       {azan.type}{" "}
                       {azan.price ? (
-                        <Text className="text-gold">- ${azan.price}</Text>
+                        <Text style={{ color: COLORS.gold }}>
+                          - ${azan.price}
+                        </Text>
                       ) : (
                         ""
                       )}
                     </Text>
                     <Text style={styles.azanTitle}>{azan.name}</Text>
-                    <Text style={styles.azanLocation} className="text-gray-500">
-                      {azan.location}
-                    </Text>
+                    <Text style={styles.azanLocation}>{azan.location}</Text>
                   </View>
-                  <View className="items-center justify-center">
-                    <TouchableOpacity className=" bg-emerald/20 p-2 rounded-full">
-                      {azan.type === "free" ? (
-                        <Play size={20} color={COLORS.emerald} />
-                      ) : (
-                        <ShoppingCart size={20} color={COLORS.emerald} />
-                      )}
-                    </TouchableOpacity>
-                  </View>
+
+                  <TouchableOpacity
+                    style={styles.playButton}
+                    onPress={() => handlePlayAzan(azan.id)}
+                  >
+                    {isAzanPlaying(azan.id) ? (
+                      <Pause size={20} color={COLORS.emerald} />
+                    ) : azan.type === "free" ? (
+                      <Play size={20} color={COLORS.emerald} />
+                    ) : (
+                      <ShoppingCart size={20} color={COLORS.emerald} />
+                    )}
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -224,27 +301,10 @@ export default function AzanScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  header: {
-    marginBottom: 20,
-  },
-  headerTitle: {
-    color: COLORS.midnight,
-    fontSize: 22,
-    fontFamily: "Inter_700Bold",
-  },
-  headerSubtitle: {
-    color: COLORS.midnight,
-    fontSize: 14,
-    marginTop: 2,
-    fontFamily: "Inter_400Regular",
-  },
-  searchFilterContainer: {
-    flexDirection: "row",
-    marginBottom: 12,
-  },
+  container: { padding: 20 },
+  header: { marginBottom: 20 },
+  headerSubtitle: { color: COLORS.midnight, fontSize: 14 },
+  searchFilterContainer: { flexDirection: "row" },
   searchButton: {
     flex: 1,
     flexDirection: "row",
@@ -254,20 +314,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: COLORS.emerald,
-    backgroundColor: "rgba(46, 125, 50, 0.05)",
+    backgroundColor: "rgba(46,125,50,0.05)",
     marginRight: 12,
   },
-  searchText: {
-    marginLeft: 8,
-    color: COLORS.midnight,
-    fontSize: 14,
-    fontFamily: "Inter_400Regular",
-  },
+  searchText: { marginLeft: 8, color: COLORS.midnight },
   filterButton: {
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: "rgba(46, 125, 50, 0.15)",
+    backgroundColor: "rgba(46,125,50,0.15)",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -286,84 +341,37 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.emerald,
     borderColor: COLORS.emerald,
   },
-  filterChipText: {
-    color: COLORS.midnight,
-    fontSize: 14,
-    fontFamily: "Inter_500Medium",
-  },
-  filterChipTextActive: {
-    color: COLORS.sand,
-  },
+  filterChipText: { color: COLORS.midnight },
+  filterChipTextActive: { color: COLORS.sand },
   azanCard: {
     borderRadius: 16,
     backgroundColor: "#fbfbf1",
     borderWidth: 1,
     marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 12,
+  },
+  iconContainer: {
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: "rgba(46,125,50,0.15)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   azanHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 4,
-  },
-  azanTitle: {
-    color: COLORS.midnight,
-    fontSize: 18,
-    fontFamily: "Inter_600SemiBold",
-  },
-  azanType: {
-    fontSize: 14,
-    fontFamily: "Inter_500Medium",
-    color: COLORS.emerald,
-  },
-  azanLocation: {
-    fontSize: 14,
-    fontFamily: "Inter_500Medium",
-  },
-  azanFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
   },
-  attendees: {
-    flexDirection: "column",
+  azanTitle: { color: COLORS.midnight, fontSize: 18 },
+  azanType: { fontSize: 14, color: COLORS.emerald },
+  azanLocation: { fontSize: 14, color: "#666" },
+  playButton: {
+    padding: 10,
+    borderRadius: 999,
+    backgroundColor: "rgba(46,125,50,0.2)",
     alignItems: "center",
-  },
-  attendeesText: {
-    color: COLORS.midnight,
-    fontSize: 13,
-    fontFamily: "Inter_500Medium",
-    marginLeft: 8,
-  },
-  seeAllText: {
-    color: "#ffffff",
-    fontSize: 14,
-    fontFamily: "Inter_500Medium",
+    justifyContent: "center",
   },
 });
-
-/* <View style={styles.azanFooter}>
-                  <View className="space-y-2">
-                    <View className="flex-row items-center">
-                      <Users size={16} color={COLORS.midnight} />
-                      <Text style={styles.attendeesText}>
-                        {event.rsvps.length} attending
-                      </Text>
-                    </View>
-                    <View className="flex-row items-center">
-                      <CalendarClock size={16} color={COLORS.midnight} />
-                      <Text style={styles.attendeesText}>
-                        {event.date
-                          ? new Date(event.date).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                            })
-                          : "TBD"}{" "}
-                        / {event.startTime || "TBD"} - {event.endTime || "TBD"}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity className="p-2 bg-emerald rounded-lg ">
-                    <Text style={styles.seeAllText}>Details</Text>
-                  </TouchableOpacity>
-                </View> */

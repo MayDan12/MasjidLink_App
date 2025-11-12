@@ -85,6 +85,7 @@ export default {
       supportsTablet: true,
       jsEngine: "hermes",
       infoPlist: {
+        UIBackgroundModes: ["audio"],
         ITSAppUsesNonExemptEncryption: false,
         NSLocationWhenInUseUsageDescription:
           "This app needs location access to find Qibla direction.",
@@ -112,10 +113,10 @@ export default {
 
     plugins: [
       "expo-router",
+      "expo-audio",
       [
         "@stripe/stripe-react-native",
         {
-          merchantIdentifier: "merchant.com.yourcompany.appname",
           enableGooglePay: false,
         },
       ],
