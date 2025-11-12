@@ -7,6 +7,8 @@ import {
   Inter_700Bold,
   useFonts,
 } from "@expo-google-fonts/inter";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Toaster } from "sonner-native";
 
 import { CrimsonText_400Regular } from "@expo-google-fonts/crimson-text/400Regular";
 import { CrimsonText_400Regular_Italic } from "@expo-google-fonts/crimson-text/400Regular_Italic";
@@ -38,9 +40,12 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <AuthGate />
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <AuthGate />
+        <Toaster />
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -54,76 +59,3 @@ function AuthGate() {
     />
   );
 }
-
-// import { Redirect, Slot } from "expo-router";
-// import "react-native-reanimated";
-// import "./globals.css";
-
-// import { AuthProvider, useAuth } from "@/app/context/AuthContext"; // Adjust path if needed
-// import { Ephesis_400Regular } from "@expo-google-fonts/ephesis";
-// // import { Ephesis_400Regula } from "@expo-google-fonts/okta";
-
-// import {
-//   Inter_400Regular,
-//   Inter_500Medium,
-//   Inter_600SemiBold,
-//   Inter_700Bold,
-//   useFonts,
-// } from "@expo-google-fonts/inter";
-
-// // Define how notifications should behave
-// // Notifications.setNotificationHandler({
-// //   handleNotification: async () => ({
-// //     shouldShowBanner: true, // iOS: show banner
-// //     shouldShowList: true, // iOS: show in notification center
-// //     shouldPlaySound: true,
-// //     shouldSetBadge: false,
-// //   }),
-// // });
-
-// // async function requestNotificationPermissions() {
-// //   const { status } = await Notifications.requestPermissionsAsync();
-// //   if (status !== "granted") {
-// //     alert("Permission for notifications not granted!");
-// //   }
-// // }
-
-// export default function RootLayout() {
-//   const [loaded] = useFonts({
-//     Inter_400Regular,
-//     Inter_500Medium,
-//     Inter_600SemiBold,
-//     Inter_700Bold,
-//     Ephesis_400Regular,
-//   });
-//   // useEffect(() => {
-//   //   requestNotificationPermissions();
-//   // }, []);
-
-//   if (!loaded) {
-//     return null;
-//   }
-
-//   return (
-//     // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-//     <AuthProvider>
-//       <AuthenticatedLayout />
-//     </AuthProvider>
-//     // </ThemeProvider>
-//   );
-// }
-
-// function AuthenticatedLayout() {
-//   const { user } = useAuth();
-//   if (!user) {
-//     return <Redirect href={"/(auth)/intro"} />;
-//   }
-//   return (
-//     <Slot
-//       screenOptions={{
-//         animation: "slide_from_right",
-//         gestureEnabled: true,
-//       }}
-//     />
-//   );
-// }

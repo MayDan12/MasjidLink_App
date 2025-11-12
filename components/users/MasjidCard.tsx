@@ -50,7 +50,14 @@ export const MasjidCard: React.FC<MasjidCardProps> = ({
             <Text style={styles.name} numberOfLines={1}>
               {masjid?.name}
             </Text>
-            <Text style={styles.address}>{masjid?.address} </Text>
+            <Text style={styles.address}>{masjid?.address}</Text>
+          </View>
+          <View style={styles.stat}>
+            <Text style={styles.statText}>
+              {masjid?.rating ?? 0}{" "}
+              <Star color={"#ffbf00"} fill={"#ffbf00"} size={16} />
+            </Text>
+            <Text style={styles.statTextSub}>1.2k reviews</Text>
           </View>
         </View>
 
@@ -70,7 +77,7 @@ export const MasjidCard: React.FC<MasjidCardProps> = ({
       <View className="h-0.5 w-full bg-emerald/30" />
 
       <View style={styles.content}>
-        <View
+        {/* <View
           style={styles.statsRow}
           className="flex-row items-center justify-evenly"
         >
@@ -89,7 +96,7 @@ export const MasjidCard: React.FC<MasjidCardProps> = ({
             <Text style={styles.statText}>{masjid?.followersCount ?? 0}</Text>
             <Text style={styles.statTextSub}>Members</Text>
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.facilities}>
           {facilities.slice(0, 3).map((facility, index) => (
@@ -206,7 +213,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   stat: {
-    alignItems: "center",
     marginRight: 16,
   },
   statText: {

@@ -40,12 +40,14 @@ export default function TabLayout() {
           borderTopWidth: 0,
           elevation: 8,
         },
+        headerTitleAlign: "left",
         headerTitle: () => (
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               backgroundColor: "transparent",
+              paddingTop: 18,
             }}
           >
             <Pressable onPress={() => router.push("/user/profile")}>

@@ -3,9 +3,10 @@ import { CreateCampaign } from "@/components/imam/createcampaign";
 import { DonationListing } from "@/components/imam/donationlist";
 import { createDonationCampaign } from "@/services/getCampaigns";
 import { CreateCampaignData } from "@/types/donation";
-import { Plus } from "lucide-react-native";
+import { BellPlus, Plus } from "lucide-react-native";
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
+import { toast } from "sonner-native";
 
 export default function ImamDonation() {
   const { user, role } = useAuth();
@@ -20,17 +21,19 @@ export default function ImamDonation() {
     try {
       // Call your service to create the campaign
       await createDonationCampaign(data, user.uid);
+      toast.success("Campaign created successfully!", {
+        style: { borderBlockColor: "#2E7D32", borderWidth: 1 },
+        icon: <BellPlus size={20} color="#2E7D32" />,
+        duration: 3000,
+      });
     } catch (error) {
       console.error("Error creating campaign:", error);
-      alert("Failed to create campaign. Please try again.");
+      toast.error("Failed to create campaign. Please try again.");
       return;
+    } finally {
+      setIsCreating(false);
+      setCurrentView("list");
     }
-
-    setIsCreating(false);
-    setCurrentView("list");
-
-    // Show success message
-    alert("Campaign created successfully!");
   };
 
   const handleCancelCreate = () => {

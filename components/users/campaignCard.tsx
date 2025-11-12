@@ -1,16 +1,20 @@
 import { useAuth } from "@/app/context/AuthContext";
+import { deleteDonationCampaign } from "@/services/getCampaigns";
 import { Campaign } from "@/types/donation";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   AlertTriangle,
   BookOpen,
   Clock,
+  Edit,
   Globe,
   Heart,
   Home,
+  Trash,
 } from "lucide-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { toast } from "sonner-native";
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -24,6 +28,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
   onDonate,
 }) => {
   const { role } = useAuth();
+  const [loading, setLoading] = useState(false);
   const progress = (campaign.amountRaised / campaign.goal_amount) * 100;
   const daysRemaining = Math.ceil(
     (new Date(campaign.endDate).getTime() - new Date().getTime()) /
@@ -86,6 +91,23 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       currency: "USD",
       minimumFractionDigits: 0,
     }).format(amount);
+  };
+
+  const handleCampaignDelete = async (campaignId: string) => {
+    setLoading(true);
+    try {
+      await deleteDonationCampaign(campaignId);
+      toast.success("Campaign deleted successfully.", {
+        icon: <Trash size={20} color="red" />,
+
+        duration: 3000,
+        style: { borderBlockColor: "red", borderWidth: 1 },
+      });
+    } catch (error) {
+      console.error("Error deleting campaign:", error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -292,34 +314,60 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
             style={{
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-around",
+              justifyContent: "space-between",
             }}
           >
+            <TouchableOpacity
+              onPress={() => handleCampaignDelete(campaign.id)}
+              disabled={campaign.status !== "active"}
+              style={{
+                backgroundColor:
+                  campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
+                paddingVertical: 8,
+                paddingHorizontal: 10,
+                borderRadius: 8,
+                alignItems: "center",
+                flexDirection: "row",
+                gap: 3,
+              }}
+            >
+              <Trash size={18} className="animate-ping" color="#fff" />
+              <Text
+                style={{
+                  color: campaign.status === "active" ? "#fff" : "#9E9E9E",
+                  fontSize: 17,
+                  fontWeight: "600",
+                  fontFamily: "CrimsonText_600SemiBold",
+                }}
+              >
+                Delete
+              </Text>
+            </TouchableOpacity>
             {/* <TouchableOpacity
               onPress={() => onDonate(campaign)}
               disabled={campaign.status !== "active"}
               style={{
                 backgroundColor:
-                  campaign.status === "active" ? "#0A9C94" : "#E0E0E0",
-                paddingVertical: 12,
+                  campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
+                paddingVertical: 10,
+                paddingHorizontal: 10,
                 borderRadius: 8,
                 alignItems: "center",
+                flexDirection: "row",
+                gap: 6,
               }}
             >
+              <Edit size={20} color="#fff" />
+
               <Text
                 style={{
                   color: campaign.status === "active" ? "#fff" : "#9E9E9E",
                   fontSize: 16,
                   fontWeight: "600",
+                  fontFamily: "CrimsonText_600SemiBold",
                 }}
               >
-                {campaign.status === "active"
-                  ? "Chill first"
-                  : campaign.status === "completed"
-                    ? "View Details"
-                    : campaign.status === "upcoming"
-                      ? "Notify Me"
-                      : "Archived"}
+                Recieved Amount
               </Text>
             </TouchableOpacity> */}
             <TouchableOpacity
@@ -328,52 +376,26 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
               style={{
                 backgroundColor:
                   campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
-                paddingVertical: 12,
+                paddingVertical: 8,
+                paddingHorizontal: 10,
                 borderRadius: 8,
                 alignItems: "center",
+                flexDirection: "row",
+                gap: 6,
               }}
             >
-              <Text
-                style={{
-                  color: campaign.status === "active" ? "#fff" : "#9E9E9E",
-                  fontSize: 16,
-                  fontWeight: "600",
-                }}
-              >
-                {campaign.status === "active"
-                  ? "Chill first"
-                  : campaign.status === "completed"
-                    ? "View Details"
-                    : campaign.status === "upcoming"
-                      ? "Notify Me"
-                      : "Archived"}
+              <Text>
+                <Edit size={20} color="#fff" />
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => onDonate(campaign)}
-              disabled={campaign.status !== "active"}
-              style={{
-                backgroundColor:
-                  campaign.status === "active" ? "#2E7D32" : "#E0E0E0",
-                paddingVertical: 12,
-                borderRadius: 8,
-                alignItems: "center",
-              }}
-            >
               <Text
                 style={{
                   color: campaign.status === "active" ? "#fff" : "#9E9E9E",
                   fontSize: 16,
                   fontWeight: "600",
+                  fontFamily: "CrimsonText_600SemiBold",
                 }}
               >
-                {campaign.status === "active"
-                  ? "Chill first"
-                  : campaign.status === "completed"
-                    ? "View Details"
-                    : campaign.status === "upcoming"
-                      ? "Notify Me"
-                      : "Archived"}
+                Edit
               </Text>
             </TouchableOpacity>
           </View>
