@@ -270,26 +270,38 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
         )}
 
         {/* Status and Time */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <Clock size={16} color="#757575" />
-          <Text
+        <View>
+          <View
             style={{
-              marginLeft: 6,
-              fontSize: 16,
-              color: "#757575",
-              fontFamily: "CrimsonText_600SemiBold",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 10,
             }}
           >
-            {getStatusText()}
-          </Text>
+            <Clock size={16} color="#757575" />
+            <Text
+              style={{
+                marginLeft: 6,
+                fontSize: 16,
+                color: "#757575",
+                fontFamily: "CrimsonText_600SemiBold",
+              }}
+            >
+              {getStatusText()}
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#9E9E9E",
+                fontFamily: "CrimsonText_600SemiBold",
+              }}
+            >
+              Created by {campaign.masjidName}
+            </Text>
+          </View>
         </View>
-
         {/* Donate Button */}
         {role === "user" ? (
           <TouchableOpacity

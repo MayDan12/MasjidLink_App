@@ -10,6 +10,7 @@ export interface Campaign {
   category: "general" | "construction" | "education" | "charity" | "emergency";
   createdAt?: any;
   updatedAt?: any;
+  masjidName?: string;
 }
 
 export interface CreateCampaignData {
