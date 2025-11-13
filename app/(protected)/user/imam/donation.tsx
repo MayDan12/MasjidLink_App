@@ -2,6 +2,7 @@ import { useAuth } from "@/app/context/AuthContext";
 import { CreateCampaign } from "@/components/imam/createcampaign";
 import { DonationListing } from "@/components/imam/donationlist";
 import { createDonationCampaign } from "@/services/getCampaigns";
+import { getMasjidById } from "@/services/getMasjids";
 import { CreateCampaignData } from "@/types/donation";
 import { BellPlus, Plus } from "lucide-react-native";
 import React, { useState } from "react";
@@ -19,8 +20,13 @@ export default function ImamDonation() {
     if (!user || role === "user") return;
 
     try {
+      const masjidData = await getMasjidById(user.uid);
+      if (masjidData.error) {
+        toast.error("Masjid not found. Cannot create campaign.");
+        return;
+      }
       // Call your service to create the campaign
-      await createDonationCampaign(data, user.uid);
+      await createDonationCampaign(data, user.uid, masjidData?.data.name);
       toast.success("Campaign created successfully!", {
         style: { borderBlockColor: "#2E7D32", borderWidth: 1 },
         icon: <BellPlus size={20} color="#2E7D32" />,

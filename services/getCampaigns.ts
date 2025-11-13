@@ -138,7 +138,8 @@ export const subscribeToActiveDonations = (
  */
 export const createDonationCampaign = async (
   data: CreateDonationData,
-  imamId: string
+  imamId: string,
+  masjidName: string
 ): Promise<{ success: boolean; id?: string; message?: string }> => {
   try {
     const timestamp = Timestamp.now();
@@ -146,6 +147,7 @@ export const createDonationCampaign = async (
     const donationData = {
       ...data,
       imamId,
+      masjidName,
       createdBy: imamId,
       amountRaised: 0,
       status: "active" as const,
