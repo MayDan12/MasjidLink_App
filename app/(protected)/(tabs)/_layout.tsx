@@ -72,12 +72,7 @@ export default function TabLayout() {
               >
                 Assalamualaikum!
               </Text>
-              <Text
-                style={{ fontFamily: "Inter_400Regular" }}
-                className="text-white"
-              >
-                {name}
-              </Text>
+              
             </View>
           </View>
         ),
