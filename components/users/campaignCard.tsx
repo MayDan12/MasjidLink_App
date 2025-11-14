@@ -172,7 +172,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       </View>
 
       {/* Card Content */}
-      <View style={{ paddingHorizontal: 16, paddingTop: 5 }}>
+      <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
         {/* Category and Title */}
         <View
           style={{
