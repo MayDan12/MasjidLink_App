@@ -47,7 +47,7 @@ export default function TabLayout() {
               flexDirection: "row",
               alignItems: "center",
               backgroundColor: "transparent",
-              paddingTop: 18,
+          
             }}
           >
             <Pressable onPress={() => router.push("/user/profile")}>
@@ -67,7 +67,7 @@ export default function TabLayout() {
             </Pressable>
             <View>
               <Text
-                style={{ fontFamily: "Inter_600SemiBold", lineHeight: 14 }}
+                style={{ fontFamily: "Inter_600SemiBold" }}
                 className="text-white text-xl"
               >
                 Assalamualaikum!

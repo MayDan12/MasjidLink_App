@@ -172,7 +172,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
       </View>
 
       {/* Card Content */}
-      <View style={{ padding: 16 }}>
+      <View style={{ paddingHorizontal: 16, paddingTop: 5 }}>
         {/* Category and Title */}
         <View
           style={{
@@ -221,7 +221,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
 
         {/* Progress Bar */}
         {campaign.status !== "upcoming" && (
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <View
               style={{
                 height: 6,
@@ -270,7 +270,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = ({
         )}
 
         {/* Status and Time */}
-        <View>
+        <View style={{ gap: 4, flexDirection: "row", justifyContent: "space-between" }}>
           <View
             style={{
               flexDirection: "row",

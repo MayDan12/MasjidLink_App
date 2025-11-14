@@ -49,6 +49,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/profile"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Settings" />,
           headerStyle: {
             backgroundColor: "#2E7D32",
@@ -58,11 +59,13 @@ export default function ProtectedLayout() {
           headerTintColor: "#fff",
           headerTitleAlign: "center",
           headerShown: false,
+          
         }}
       />
       <Stack.Screen
         name="user/azan"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Azan Voices" />,
           headerStyle: {
             backgroundColor: "#2E7D32",
@@ -76,6 +79,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/masjiddetails"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Masjid Details" />,
           headerStyle: {
             backgroundColor: "#2E7D32",
@@ -89,6 +93,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/tasbih"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Tasbih" />,
           headerStyle: {
             backgroundColor: "#2E7D32",
@@ -102,6 +107,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/qibla"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Qibla" />,
           headerStyle: {
             backgroundColor: "#2E7D32",
@@ -115,6 +121,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/account/profileupdate"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Profile" />,
           headerShown: false,
           headerStyle: {
@@ -129,6 +136,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/account/settings"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Settings" />,
           headerShown: true,
           headerStyle: {
@@ -143,6 +151,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/premium"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Premium" />,
           headerShown: true,
           headerStyle: {
@@ -157,6 +166,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/donation"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Donations" />,
           headerShown: true,
           headerStyle: {
@@ -171,6 +181,7 @@ export default function ProtectedLayout() {
       <Stack.Screen
         name="user/imam/donation"
         options={{
+          headerBackTitle: "Back", 
           headerTitle: () => <HeaderTitle title="Donations" />,
           headerShown: false,
           headerStyle: {

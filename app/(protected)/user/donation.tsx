@@ -452,6 +452,7 @@
 //     fontFamily: "Inter_500Medium",
 //   },
 // });
+
 import { useAuth } from "@/app/context/AuthContext";
 import { CampaignCard } from "@/components/users/campaignCard";
 import { subscribeToActiveDonations } from "@/services/getCampaigns";
@@ -468,58 +469,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// Mock data - replace with your actual data source
-const MOCK_CAMPAIGNS: Campaign[] = [
-  {
-    id: "1",
-    title: "Emergency Relief for Flood Victims",
-    description:
-      "Provide immediate assistance to families affected by recent flooding in the coastal regions. Your donation will help with food, shelter, and medical supplies.",
-    goal_amount: 50000,
-    amountRaised: 25430,
-    startDate: "2024-01-01",
-    endDate: "2024-12-31",
-    status: "active",
-    category: "emergency",
-  },
-  {
-    id: "2",
-    title: "Build a School in Kenya",
-    description:
-      "Help us construct a new primary school in rural Kenya to provide education for over 200 children who currently have no access to formal schooling.",
-    goal_amount: 10000,
-    amountRaised: 10000,
-    startDate: "2024-01-01",
-    endDate: "2024-06-30",
-    status: "completed",
-    category: "education",
-  },
-  {
-    id: "3",
-    title: "Community Health Center Construction",
-    description:
-      "Fund the construction of a new health center that will serve 5 villages with basic healthcare services and emergency medical care.",
-    goal_amount: 15000,
-    amountRaised: 0,
-    startDate: "2024-03-01",
-    endDate: "2024-12-31",
-    status: "upcoming",
-    category: "construction",
-  },
-  {
-    id: "4",
-    title: "Food Drive for Homeless Shelter",
-    description:
-      "Support our monthly food drive that provides nutritious meals to over 500 homeless individuals in the city. Every dollar helps feed someone in need.",
-    goal_amount: 5000,
-    amountRaised: 3200,
-    startDate: "2024-01-01",
-    endDate: "2024-02-28",
-    status: "active",
-    category: "charity",
-  },
-];
 
 const CATEGORIES: { value: CategoryType | "all"; label: string }[] = [
   { value: "all", label: "All" },
@@ -593,7 +542,7 @@ export const DonationListing: React.FC = () => {
         paddingHorizontal: 16,
         paddingVertical: 8,
         backgroundColor:
-          selectedCategory === item.value ? "#2E7D32" : "#fbfbf1",
+        selectedCategory === item.value ? "#2E7D32" : "#fbfbf1",
         borderRadius: 20,
         marginRight: 8,
         borderColor: "#2E7D32",
@@ -614,16 +563,15 @@ export const DonationListing: React.FC = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F5F5DC" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F5F5DC"  }} edges={["right", "bottom", "left"]}>
       <StatusBar barStyle="dark-content" />
 
       {/* Header */}
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ paddingHorizontal: 16, paddingTop: 10, marginBottom: 2 }}>
         <Text
           style={{
             fontSize: 28,
             color: "#212121",
-
             fontFamily: "CrimsonText_600SemiBold",
           }}
         >
@@ -675,7 +623,7 @@ export const DonationListing: React.FC = () => {
       </View>
 
       {/* Category Filter */}
-      <View style={{ marginBottom: 16 }}>
+      <View style={{ marginBottom: 12 }}>
         <FlatList
           data={CATEGORIES}
           renderItem={renderCategoryItem}
