@@ -2,7 +2,9 @@ import MosqueIcon from "@/components/icons/MosqueIcon";
 import PrayerTimeIcon from "@/components/icons/PrayerTime";
 import QiblaIcon from "@/components/icons/QiblaIcon";
 import ShimmerSkeleton from "@/components/ShimmerSkeleton";
+import { getLocationFromStorage, saveLocationToStorage } from "@/hooks/localstorage";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Location from "expo-location";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -31,6 +33,17 @@ import Carousel, {
   type ICarouselInstance,
 } from "react-native-reanimated-carousel";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+
+
+type LocInfo = {
+  city?: string;
+  region?: string;
+  country?: string;
+  postalCode?: string;
+  latitude?: number;
+  longitude?: number;
+};
 
 // Constants
 const { width } = Dimensions.get("window");
@@ -157,7 +170,62 @@ const recentActivities = [
   },
 ];
 
+const useLocationInfo = () => {
+  const [info, setInfo] = useState<LocInfo | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        // Check for saved location first
+        const saved = await getLocationFromStorage();
+        if (saved) {
+          setInfo(saved);
+          setLoading(false);
+        }
+
+        // Request location permission
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setLoading(false);
+          return;
+        }
+
+        // Get current position
+        const position = await Location.getCurrentPositionAsync();
+        const { latitude, longitude } = position.coords;
+
+        // Reverse geocode
+        const geocode = await Location.reverseGeocodeAsync({
+          latitude,
+          longitude,
+        });
+
+        if (geocode.length > 0) {
+          const addr = geocode[0];
+          const city = addr.city ?? addr.subregion ?? addr.region;
+          const country = addr.country ?? "Unknown";
+
+          if (city && country) {
+            await saveLocationToStorage(city, country);
+            setInfo({ city, country, latitude, longitude });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching location:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  return { info, loading };
+};
+
 export default function ImamHomeScreen() {
+  const { info, loading: locationLoading } = useLocationInfo();
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const [prayerTimes, setPrayerTimes] = useState<any>(null);
@@ -420,10 +488,19 @@ export default function ImamHomeScreen() {
             <Text style={styles.greeting}>As-salamu alaykum</Text>
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
-          <View style={styles.locationContainer}>
-            <MapPin size={16} color="#059669" />
-            <Text style={styles.locationText}>Lagos, Nigeria</Text>
+         
+            <View style={styles.locationContainer}>
+            <MapPin size={18} color="#059669" />
+            {info?.city && info?.country ? (
+              <View>
+                <Text style={styles.locationText}>{info.city}</Text>
+                <Text style={styles.locationText}>{info.country}</Text>
+              </View>
+            ) : (
+              <Text>Loading...</Text>
+            )}
           </View>
+      
         </View>
 
         {/* Prayer Time Card */}
